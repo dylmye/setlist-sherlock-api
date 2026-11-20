@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   update-script:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
 
     steps:
       - uses: actions/checkout@v7.0.1
@@ -23,9 +23,6 @@ jobs:
 
       - name: Install
         run: pnpm install
-
-      - name: Build
-        run: pnpm run build
 
       - name: Publish the script to Bunny
         uses: BunnyWay/actions/deploy-script@main
