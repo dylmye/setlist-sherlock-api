@@ -8,8 +8,7 @@ const ACCEPTED_SETLIST_FM_LANGS: string[] = ["en", "es", "fr", "de", "pt", "tr",
 const headerSecurityTheatre = (rqHeaders: Headers): boolean =>
   rqHeaders.has("x-sherlock-theatre-version") &&
   rqHeaders.get("x-sherlock-theatre-version") === "1.0.0" &&
-  !!rqHeaders.get("User-Agent")?.startsWith("setlist-sherlock-client, ") &&
-  rqHeaders.get("Origin") === "https://setlist-sherlock.dylmye.me";
+  !!rqHeaders.get("User-Agent")?.startsWith("setlist-sherlock-client, ");
 
 const setlistFmStyleError = (code: number, message: string) =>
   [JSON.stringify({ status: code, message }), { status: code, statusText: message }] as const;
@@ -40,7 +39,6 @@ BunnySDK.net.http.serve(async (request: Request): Promise<Response> => {
       )
         ? request.headers.get("Accept-Language")!
         : "en",
-      Origin: "https://setlist-sherlock.dylmye.me",
       Accept: "application/json",
       "User-Agent": "setlist-sherlock-api, 1.0.0",
     },
