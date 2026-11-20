@@ -5,20 +5,38 @@ const SETLIST_FM_REGEX: RegExp = /^\/1\.0\/(artist|city|venue|search|setlist|use
 const SETLIST_FM_URL_BASE: string = "https://api.setlist.fm/rest";
 const ACCEPTED_SETLIST_FM_LANGS: string[] = ["en", "es", "fr", "de", "pt", "tr", "it", "pl"];
 
+const headerSecurityTheatre = (rqHeaders: Headers): boolean =>
+  rqHeaders.has("x-sherlock-theatre-version") && rqHeaders.get("x-sherlock-theatre-version") === "1.0.0" && !!rqHeaders.get("User-Agent")?.startsWith("setlist-sherlock-client, ") && rqHeaders.get("Origin") === "https://setlist-sherlock.dylmye.me";
+
+const setlistFmStyleError = (code: number, message: string) => [JSON.stringify({ status: code, message }), { status: code, statusText: message }] as const
+
 BunnySDK.net.http.serve(async (request: Request): Promise<Response> => {
+  if (!headerSecurityTheatre(request.headers)) {
+    return new Response(...setlistFmStyleError(
+      401,
+      "Missing Theatre"
+    ))
+  }
+
   let pathname: string;
   try {
     pathname = new URL(request.url)?.pathname;
   } catch {
-    throw new Error("invalid URL");
+    return new Response(...setlistFmStyleError(
+      422,
+      "Invalid URL"
+    ))
   }
 
   if (!SETLIST_FM_REGEX.test(pathname)) {
-    throw new Error("invalid path");
+    throw new Response(...setlistFmStyleError(
+      422,
+      "Invalid Path"
+    ))
   }
 
-  const requestApiUrl = new URL(`${SETLIST_FM_URL_BASE}${pathname}`);
-  return fetch(requestApiUrl, {
+  const finalUrl = new URL(`${SETLIST_FM_URL_BASE}${pathname}`);
+  return fetch(finalUrl, {
     method: "GET",
     headers: {
       "x-api-key": process.env.SETLIST_API_KEY,
