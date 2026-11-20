@@ -15,24 +15,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7.0.1
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v7.1.0
         with:
-          node-version: '22'
-
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
+          node-version: '26'
 
       - name: Install
-        run: "pnpm install"
+        run: pnpm install
 
       - name: Build
-        run: "pnpm run build"
+        run: pnpm run build
 
       - name: Publish the script to Bunny
-        uses: "BunnyWay/actions/deploy-script@main"
+        uses: BunnyWay/actions/deploy-script@main
         with:
           script_id: 103960
-          file: "dist/index.js"
+          file: dist/index.js
