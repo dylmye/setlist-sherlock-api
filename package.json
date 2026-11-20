@@ -3,12 +3,13 @@
     "version": "1.0.0",
     "license": "ISC",
     "private": true,
+    "type": "module",
     "repository": "https://github.com/dylmye/setlist-sherlock-api",
     "author": "Dylan Myers <dylmye-github-signed@opayq.com>",
     "main": "dist/index.js",
     "scripts": {
-        "lint": "oxfmt --check index.mts && oxlint index.mts",
-        "lint:fix": "oxfmt --write index.mts && oxlint --fix index.mts"
+        "lint": "oxfmt --check index.ts && oxlint index.ts",
+        "lint:fix": "oxfmt --write index.ts && oxlint --fix index.ts"
     },
     "dependencies": {
         "@bunny.net/edgescript-sdk": "0.13.0"

@@ -31,4 +31,4 @@ jobs:
         uses: BunnyWay/actions/deploy-script@main
         with:
           script_id: 103960
-          file: dist/index.js
+          file: index.ts
