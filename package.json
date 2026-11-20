@@ -1,0 +1,27 @@
+{
+    "name": "setlist-sherlock-api",
+    "version": "1.0.0",
+    "license": "ISC",
+    "private": true,
+    "repository": "https://github.com/dylmye/setlist-sherlock-api",
+    "author": "Dylan Myers <dylmye-github-signed@opayq.com>",
+    "main": "dist/index.js",
+    "scripts": {
+        "lint": "oxfmt --check index.mts && oxlint index.mts",
+        "lint:fix": "oxfmt --write index.mts && oxlint --fix index.mts"
+    },
+    "dependencies": {
+        "@bunny.net/edgescript-sdk": "0.13.0"
+    },
+    "devDependencies": {
+        "@tsconfig/node-ts": "^23.6.5",
+        "@tsconfig/node26": "^26.0.2",
+        "@types/node": "^26.6.6",
+        "oxfmt": "^0.79.0",
+        "oxlint": "^1.94.0",
+        "typescript": "7.0.2"
+    },
+    "engines": {
+        "node": ">=26.0.0"
+    }
+}
